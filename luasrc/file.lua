@@ -39,7 +39,7 @@ function HDF5File:close()
     end
 end
 
-function HDF5File:write(datapath, data, options)
+function HDF5File:H5write(datapath, data, options)
     self:_write_or_append("write", datapath, data, options)
 end
 
@@ -69,7 +69,7 @@ function HDF5File:_write_or_append(method, datapath, data, options)
     self._rootGroup[method](self._rootGroup, datapath, data, options)
 end
 
-function HDF5File:read(datapath)
+function HDF5File:H5read(datapath)
     if not datapath then
         datapath = "/"
     end
@@ -78,11 +78,11 @@ function HDF5File:read(datapath)
         datapath = datapath:sub(2)
     end
     datapath = stringx.split(datapath, "/") -- TODO
-    return self._rootGroup:read(datapath)
+    return self._rootGroup:H5read(datapath)
 end
 
 function HDF5File:all()
-    return self:read("/"):all()
+    return self:H5read("/"):all()
 end
 
 --[[ Open or create an HDF5 file.

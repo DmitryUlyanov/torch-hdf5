@@ -251,7 +251,7 @@ function HDF5Group:getOrCreateChild(name)
     return child
 end
 
-function HDF5Group:write(datapath, data, options)
+function HDF5Group:H5write(datapath, data, options)
     self:_write_or_append("write", datapath, data, options)
 end
 
@@ -299,7 +299,7 @@ function HDF5Group:_write_or_append(method, datapath, data, options)
     self._children[key] = child
 end
 
-function HDF5Group:read(datapath)
+function HDF5Group:H5read(datapath)
     assert(datapath and type(datapath) == 'table', "HDF5Group:read() expects table as first parameter")
     hdf5._logger.debug("Reading from " .. tostring(self))
     if not datapath or #datapath == 0 then
@@ -317,7 +317,7 @@ function HDF5Group:read(datapath)
         for k = 1, #datapath do
             datapath[k] = datapath[k+1]
         end
-        return child:read(datapath)
+        return child:H5read(datapath)
     end
 
     hdf5._logger.debug("Reading " .. tostring(child) .. " as '" .. key .. "' in " .. tostring(self))
